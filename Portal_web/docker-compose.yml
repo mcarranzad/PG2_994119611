@@ -1,0 +1,10 @@
+﻿version: '3'
+
+services:
+  sgc:
+    build: .
+    container_name: ml
+    restart: always
+    ports:
+        - "5000:80"
+

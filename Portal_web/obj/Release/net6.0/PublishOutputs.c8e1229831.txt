@@ -1,0 +1,9 @@
+D:\projecto\sgc.ml.exe
+D:\projecto\appsettings.Development.json
+D:\projecto\appsettings.json
+D:\projecto\sgc.ml.dll
+D:\projecto\sgc.ml.deps.json
+D:\projecto\sgc.ml.runtimeconfig.json
+D:\projecto\sgc.ml.pdb
+D:\projecto\Newtonsoft.Json.dll
+D:\projecto\System.Text.Json.dll

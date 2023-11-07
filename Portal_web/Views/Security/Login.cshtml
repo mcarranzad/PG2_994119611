@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SGC -ML </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico">
+
+    <!-- Theme styles -->
+    <link rel="stylesheet" type="text/css" href="~/css/theme.min.css">
+
+    <!-- Font Awesome -->
+    @*<link rel="stylesheet" type="text/css" href="/">*@
+
+    <!-- Vendor -->
+    <link rel="stylesheet" type="text/css" href="~/css/vendor.min.css">
+</head>
+
+
+<body class="bg-white">
+<section class="container">
+    <div class="row g-0 min-vh-100">
+        <div class="col-lg-6 d-flex align-items-center justify-content-center justify-content-lg-start">
+            <div class="py-5">
+                <a href='#'>
+                    <img src="~/assets/img/svg/logo.svg" alt="">
+                </a>
+                <h4 class="font-weight-normal text-dark mt-5">
+                    Formulario de ingreso
+                </h4>
+                <form class="w-300 w-lg-350 mt-4" id="form_login">
+
+                    <div class="mb-3">
+                        <h5 style="color:red">@ViewBag.error_login </h5>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" name="username" placeholder="Usuario" class="form-control form-control-lg bg-pastel-darkblue">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" name="pwd" placeholder="Contraseña" class="form-control form-control-lg bg-pastel-darkblue">
+                    </div>
+
+                    <input type="button" id="btn_submit" class="btn btn-primary btn-lg shadow-light text-uppercase-bold-sm hover-lift mt-4" value="Ingresar">
+
+                    <a class='d-block font-size-sm mt-5' href='@Url.Action("Recover", "Security")'>
+                        Olvidaste tu password
+                    </a>
+
+                    <a class='d-block font-size-sm mt-5' href='@Url.Action("Register", "Security")'>
+                        Registrarte
+                    </a>
+
+                    @*<div class="text-secondary font-size-sm mt-5">
+                        Don't have an account?
+                        <a href='sign-up.html'>Sign up</a>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-6 d-none d-lg-block">
+            <img class="bg-cover vw-lg-50 h-lg-100" src="/img/login/report.jpg"></img>
+        </div>
+    </div>
+</section>
+
+<!-- JAVASCRIPT
+============================================-->
+<!-- Vendor -->
+<script src="~/js/vendor.min.js"></script>
+
+
+<!-- Main Theme file -->
+<script src="~/js/theme.min.js"></script>
+
+<script src="~/js/sgl-custom.js"></script>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn_submit").click(function () {
+            send_submit({
+                url: "@Url.Action("Validate", "Security")",
+                method: "POST",
+                params: form_to_json("form_login")
+            })
+        })
+    })
+</script>
+</html>

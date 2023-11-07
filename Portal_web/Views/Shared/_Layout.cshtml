@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SGC - ML</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico"> <!-- Theme styles -->
+    <link rel="stylesheet" type="text/css" href="~/css/theme.min.css"><!-- Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="~/css/5.13.0/css/all.min.css">
+    <!-- Vendor -->
+    <link rel="stylesheet" type="text/css" href="/css/vendor.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="~/js/sweet-alert/sweetalert.css">
+</head>
+
+<body>
+<nav class="navbar navbar-vertical navbar-expand-lg navbar-light bg-white" role="navigation" style="">
+    <div class="container-fluid">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class='navbar-brand' href='@Url.Action("Index", "Home")'>
+            <h1>SGC M.L.</h1>
+        </a>
+
+        <div class="dropdown d-flex d-lg-none">
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class='dropdown-item' href='@Url.Action("Password", "Home")'>Actualizar contraseña</a>
+                <div class="dropdown-divider"></div>
+                <a class='dropdown-item' href='@Url.Action("Logout", "Security")'>Log out</a>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse mt-md-2" id="navbar-collapse">
+            <ul class="navbar-nav" id="sidebar-nav">
+                <li class="nav-item">
+                    <a href="#sidebar-blogs" class="nav-link" data-bs-toggle="collapse" aria-expanded="" aria-controls="sidebar-blogs">
+                        <span class="svg-icon text-primary me-2 relative-top--2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                                <title>ionicons-v5-c</title><polyline points="352 144 464 144 464 256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><path d="M48,368,169.37,246.63a32,32,0,0,1,45.26,0l50.74,50.74a32,32,0,0,0,45.26,0L448,160" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
+                            </svg>
+                        </span>
+                        Dashboards
+                        <i class="fas fa-chevron-down fa-xs collapse-icon ms-auto"></i>
+                    </a>
+
+                    <div class="collapse " id="sidebar-blogs" data-bs-parent="#sidebar-nav">
+                        <ul class="nav nav-sm flex-column pb-2">
+                            <li class="nav-item">
+                                <a class='nav-link ' href='@Url.Action("Dashboard", "Home")'>
+                                    Graficas
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#sidebar-subs" class="nav-link" data-bs-toggle="collapse" aria-expanded="true" aria-controls="sidebar-subs">
+                        <span class="svg-icon text-primary me-2 relative-top--2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                                <title>ionicons-v5-n</title><rect x="48" y="96" width="416" height="304" rx="32.14" ry="32.14" style="fill:none;stroke:#000;stroke-linejoin:round;stroke-width:32px"/><line x1="16" y1="416" x2="496" y2="416" style="stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"/>
+                            </svg>
+                        </span>
+                        Reportes
+                        <i class="fas fa-chevron-down fa-xs collapse-icon ms-auto"></i>
+                    </a>
+
+                    <div class="collapse show" id="sidebar-subs" data-bs-parent="#sidebar-nav">
+                        <ul class="nav nav-sm flex-column pb-2">
+                            <li class="nav-item">
+                                <a class='nav-link ' href='@Url.Action("Index", "Report")'>
+                                    Historico
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <a href="@Url.Action("Logout", "Security")" class="btn btn-light btn-sm d-none d-lg-block mt-2 mt-lg-auto mb-2 ">
+                <i class=" fas fas fa-power-off"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="main-content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white d-none d-lg-flex">
+        <div class="container-fluid">
+            @* <form id="form_idx"  action="@Url.Action("Home")"  > *@
+            <div class="input-group input-group-flush">
+                <div class="input-group-text">
+                    <i class="fas fa-search relative-top--2"></i>
+                </div>
+
+                <input type="text" class="form-control dropdown-toggle" id="input_global_search"
+                       data-bs-toggle="dropdown" maxlength="13" placeholder="Buscar DPI" aria-label="Search" value="@ViewBag.dpi" aria-expanded="false">
+
+                <!-- User -->
+                <div class="d-flex align-items-center">
+                    <div class="dropdown ms-2">
+                        <a href="#" class="d-flex align-items-center" data-bs-toggle="dropdown">
+
+                            <span class="text-dark ms-2">@ViewBag.nombres @ViewBag.apellidos</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class='dropdown-item' href='@Url.Action("Password", "Home")'>Actualizar Contraseña</a>
+                            @*<a class='dropdown-item' href='account.html'>Account settings</a>*@
+                            <div class="dropdown-divider"></div>
+                            <a class='dropdown-item' href='@Url.Action("Logout", "Security")'>Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid mt-4 pt-2 mb-7">
+        @RenderBody();
+    </div>
+</div>
+<!-- JAVASCRIPT
+============================================-->
+<!-- Vendor -->
+<script src="~/js/vendor.min.js"></script>
+<!-- Main Theme file -->
+<script src="~/js/theme.min.js"></script>
+<script src="~/js/sgl-custom.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="~/js/sweet-alert/sweetalert.js"></script>
+<script>
+
+function isNumberKey(e) {
+    var result = false; 
+    try {
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if ((charCode >= 48 && charCode <= 57) || (charCode >= 96 && charCode <= 105)) {
+            result = true;
+        }
+    }
+    catch(err) {
+        //console.log(err);
+    }
+    return result;
+}
+
+$(document).ready(function (){
+    $("#input_global_search").keyup(function (e){
+      $(this).val(this.value.replace(/[^0-9\.]/g,'')) ;      
+      var code = e.key; // recommended to use e.key, it's normalized across devices and languages
+         if(code==="Enter") e.preventDefault();
+         if(code===" " || code==="Enter" || code===","|| code===";"){             
+             send_submit({
+                   url:"@Url.Action("Index", "Home")",
+                   params:{
+                       dpi:$(this).val()
+                   },
+                   method:"GET"
+             })
+         } // missing closing if brace
+    });       
+});
+
+</script>
+
+
+</body>
+</html>

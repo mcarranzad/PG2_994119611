@@ -1,0 +1,92 @@
+﻿@model List<sgc.ml.Models.AdmHistory>
+
+
+
+<div class="container-fluid">
+    <div class="card-title mx-auto">
+        <h3> Reporte de consultas </h3>
+    </div>
+  
+    <div class="row">
+        <div class="col-md-2">
+            <label>Fecha de Inicio</label>
+            <input type="date" class="form-control" id="date_ini" value="@ViewBag.date_ini" name="date_ini"/>
+        </div>
+        <div class="col-md-2">
+            <label>Fecha Final</label>
+            <input type="date" class="form-control" id="date_end" value="@ViewBag.date_end" name="date_end"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="text-align: right">
+            <button class="btn btn-warning" id="btn_revisar"> Buscar </button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped " class="display" id="table_normal">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>DPI</th>
+                        <th>Departamento</th>
+                        <th>Municipio </th>
+                        <th>Fecha Nacimimiento</th>
+                        <th>%</th>
+                        <th>Prediccion</th>
+                        <th>Fecha Consulta</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item  in  Model)
+                        {
+                            <tr>
+                                <td>@item.history_id</td>
+                                <td>@item.dpi</td>
+                                <td>@item.departamento</td>
+                                <td>@item.municipio</td>
+                                <td>@item.fecha_nacimiento</td>
+                                <td>@item.precition</td>
+                                <td>@item.prediccion</td>
+                                <td>@item.date_created</td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function (){   
+    
+     $("#table_normal").DataTable({
+          "aaSorting": [[ 1, "desc" ]],
+           dom: 'Bfrtip',
+           buttons: [
+                      {
+                         extend: 'excel',
+                         text:   'Descargar Excel'
+                     },
+           ]
+     })
+     
+    $("#btn_revisar").click(function (){
+         send_submit({
+                 url:"@Url.Action("Index", "Report")",
+                 method:"GET",
+                 params:{
+                         date_ini :$("#date_ini").val(),
+                         date_end :$("#date_end").val()                             
+                 }       
+         })        
+     })    
+ })
+</script>

@@ -1,0 +1,71 @@
+﻿@model sgc.ml.Models.Information1
+
+
+@* @{ *@
+@*     Layout = null; *@
+@* } *@
+
+<form class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="firstName">Nombre Completo</label>
+            <input type="text" class="form-control" id="firstName" placeholder="" value="@Model.NombreCompleto" required>
+            <div class="invalid-feedback">
+                Valid first name is required.
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="lastName">DPI</label>
+            <input type="text" class="form-control" id="lastName" placeholder="" value="@Model.DPI" required>
+            <div class="invalid-feedback">
+                Valid last name is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="firstName">Departamento</label>
+            <input type="text" class="form-control" id="firstName" placeholder="" value="@Model.departamento" required>
+            <div class="invalid-feedback">
+                Valid first name is required.
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="lastName">Municipio</label>
+            <input type="text" class="form-control" id="lastName" placeholder="" value="@Model.municipio" required>
+            <div class="invalid-feedback">
+                Valid last name is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="firstName">Fecha Nacimiento</label>
+            <input type="text" class="form-control" id="firstName" placeholder="" value="@Model.fechaNacimiento" required>
+            <div class="invalid-feedback">
+                Valid first name is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="alert alert-primary" role="alert">
+            Respuesta de la prediccion <b>< @Model.prediccion </b>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="alert alert-danger" role="alert">
+            Margen del error del modelo : <b> @ViewBag.margende_error </b>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="alert alert-info" role="alert">
+            Margen del error del modelo : <b> @ViewBag.precision_modelo </b>
+        </div>
+    </div>
+
+</form>

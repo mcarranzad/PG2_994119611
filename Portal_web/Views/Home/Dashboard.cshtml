@@ -1,0 +1,232 @@
+﻿<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 360px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+    
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+    
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+    
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+    
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+    
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+</style>
+<div class="row">
+    <div class="col-md-3">
+        <input type="date"  class="form-control" id="date_ini" name="date_ini"/>
+    </div>
+    <div class="col-md-3">
+        <input type="date"  class="form-control" id="date_end" name="date_end"/>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div id="container"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="container-b"></div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div id="container-c"></div>
+    </div>
+</div>
+
+
+<script>
+// Data retrieved https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature
+Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Precision por municipio'
+    },
+    subtitle: {
+        text: ''
+    },
+    credits: {
+        enabled: false
+      },
+    xAxis: {
+        categories: @Html.Raw(Json.Serialize(ViewBag.municipios))
+    },
+    yAxis: {
+        title: {
+            text: 'Total de Analisis'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Cliente Pagara',
+        data: @Html.Raw(Json.Serialize(ViewBag.municipios_pay))
+    }, {
+        name: 'Cliente No Pagara',
+        data: @Html.Raw(Json.Serialize(ViewBag.municipios_no_pay))
+    }]
+});
+
+// Data retrieved from https://netmarketshare.com
+Highcharts.chart('container-b', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Total de consultas y Total Precision ',
+        align: 'left'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.acertividad:.3f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}'
+            }
+        }
+    },
+    series: [{
+        name: 'Probabilidad',
+        colorByPoint: true,
+        data: @Html.Raw(Json.Serialize(ViewBag.pie_one))
+    }],
+    credits: {
+        enabled: false
+      },
+});
+
+Highcharts.chart('container-c', {
+    title: {
+        text: 'Proyeccion de dinero a recuperar',
+        align: 'left'
+    },
+    xAxis: {
+        categories: @Html.Raw(Json.Serialize(ViewBag.municipios))
+    },
+    yAxis: {
+        title: {
+            text: ''
+        }
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    plotOptions: {
+        series: {
+            borderRadius: '25%'
+        }
+    },
+    credits: {
+        enabled: false
+      },
+    series: [{
+        type: 'column',
+        name: 'Pagaran',
+        data: @Html.Raw(Json.Serialize(ViewBag.municipios_pay))
+    }, {
+        type: 'column',
+        name: 'No Pagaran',
+        data: @Html.Raw(Json.Serialize(ViewBag.municipios_no_pay))
+    }, {
+        type: 'line',
+        step: 'center',
+        name: 'Recuperacion',
+        data: @Html.Raw(Json.Serialize(ViewBag.municipios_recuperacion_a)),
+        marker: {
+            lineWidth: 1,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+    }, {
+        type: 'pie',
+        name: 'Total',
+        data: [{
+            name: '2020',
+            y: 619,
+            color: Highcharts.getOptions().colors[0], // 2020 color
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                format: '{point.total}',
+                style: {
+                    fontSize: '15px'
+                }
+            }
+        }, {
+            name: 'Monto total a recuperar',
+            y: @ViewBag.total_recuperar,
+            color: Highcharts.getOptions().colors[1] // 2021 color
+        }, {
+            name: 'Monto total sin cobrar',
+            y: @ViewBag.total_no_recuperar,
+            color: Highcharts.getOptions().colors[2] // 2022 color
+        }],
+        center: [75, 65],
+        size: 100,
+        innerSize: '70%',
+        showInLegend: false,
+        dataLabels: {
+            enabled: false
+        }
+    }]
+});
+
+
+</script>
